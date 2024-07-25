@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,6 +10,7 @@ import Users from "./user/pages/Users";
 import NewPlaces from "./places/pages/NewPlaces";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import UserPlaces from "./places/pages/UsersPlaces";
+import UpdatePlace from "./places/pages/UpdatePlace";
 
 const App = () => {
   return (
@@ -25,6 +26,9 @@ const App = () => {
           </Route>
           <Route path="/places/new" exact>
             <NewPlaces />
+          </Route>
+          <Route path="/places/:placeId">
+            <UpdatePlace />
           </Route>
           <Redirect to="/" />
         </Switch>

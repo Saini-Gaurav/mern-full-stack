@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose')
 
 const HtppError = require('./models/http-error')
 
@@ -29,4 +30,9 @@ app.use((error, req, res, next)=>{
 })
 
 
-app.listen(5000)
+mongoose.connect('mongodb+srv://gauravsaini050203:bBczYMuvruZTTnfv@cluster0.nndflme.mongodb.net/places').then(()=>{
+  app.listen(5000)
+  console.log("Database is connected")
+}).catch(err => {
+  console.log(err);
+})

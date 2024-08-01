@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 
-const HtppError = require('./models/http-error')
+const HttpError = require('./models/http-error')
 
 const placeRoutes = require("./routes/places-routes")
 const userRoutes = require("./routes/users-routes")
@@ -16,7 +16,7 @@ app.use('/api/places', placeRoutes);
 app.use('/api/users', userRoutes)
 
 app.use((req, res, next)=>{
-  const error = new HtppError("Could not found this route", 404);
+  const error = new HttpError("Could not found this route", 404);
   throw error;
 })
 

@@ -1,7 +1,7 @@
 const { v4: uuid } = require("uuid");
 const { validationResult } = require('express-validator')
 
-const HtppError = require('../models/http-error')
+const HttpError = require('../models/http-error')
 const User = require('../models/user')
 
 const DUMMY_USERS = [
@@ -19,7 +19,7 @@ const getUsers = async (req, res, next)=> {
         users = await User.find({}, '-password')
     }
     catch(err){
-        const error = new HtppError('Fetching users failed. Please try again later', 500);
+        const error = new HttpError('Fetching users failed. Please try again later', 500);
         return next(error);
     };
 
@@ -29,7 +29,7 @@ const getUsers = async (req, res, next)=> {
 const signup = async (req, res, next)=> {
     const errors = validationResult(req)
     if(!errors.isEmpty()){
-        return next(new HtppError("Invalid inputs passed. Please check your data !", 422));
+        return next(new HttpError("Invalid inputs passed. Please check your data !", 422));
     }
     const {name, email, password} = req.body
 
@@ -38,12 +38,12 @@ const signup = async (req, res, next)=> {
         existingUser = await User.findOne({email: email});
     }
     catch(err){
-        const error = new HtppError("Failed to create a new account. Please try again later", 500);
+        const error = new HttpError("Failed to create a new account. Please try again later", 500);
         return next(error);
     }
 
     if(existingUser){
-        const error = new HtppError("User exists already. Please login instead!", 422);
+        const error = new HttpError("User exists already. Please login instead!", 422);
         return next(error);
     }
     
@@ -59,7 +59,7 @@ const signup = async (req, res, next)=> {
         await createdUsers.save();
     }
     catch(err){
-        const error = new HtppError('Signin Up failed, Please try again', 500);
+        const error = new HttpError('Signin Up failed, Please try again', 500);
         return next(error);
     }
 
@@ -75,12 +75,12 @@ const login = async (req, res, next)=> {
         existingUser = await User.findOne({email: email});
     }
     catch(err){
-        const error = new HtppError('Logg in Failed. Please try again', 500);
+        const error = new HttpError('Logg in Failed. Please try again', 500);
         return next(error);
     }
 
     if(!existingUser || existingUser.password !== password){
-        const error = new HtppError('Invalid credentials', 401);
+        const error = new HttpError('Invalid credentials', 401);
         return next(error);
     }
 

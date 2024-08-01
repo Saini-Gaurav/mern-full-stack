@@ -31,7 +31,7 @@ const signup = async (req, res, next)=> {
     if(!errors.isEmpty()){
         return next(new HtppError("Invalid inputs passed. Please check your data !", 422));
     }
-    const {name, email, password, places} = req.body
+    const {name, email, password} = req.body
 
     let existingUser;
     try {
@@ -52,7 +52,7 @@ const signup = async (req, res, next)=> {
         email,
         image: "https://img.freepik.com/free-photo/floral-patterns-depict-modern-wedding-celebration-generated-by-ai_188544-9728.jpg",
         password,
-        places
+        places: []
     });
 
     try {

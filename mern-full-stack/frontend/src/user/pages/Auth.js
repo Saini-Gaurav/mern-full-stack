@@ -55,7 +55,7 @@ const Auth = () => {
           image: {
             value: null,
             isValid: false,
-          }
+          },
         },
         false
       );
@@ -65,7 +65,7 @@ const Auth = () => {
 
   const authSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(formState.inputs)
+    console.log(formState.inputs);
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
@@ -84,16 +84,17 @@ const Auth = () => {
     } else {
       try {
         const formData = new FormData();
-        formData.append('email', formState.inputs.email.value);
-        formData.append('name', formState.inputs.name.value);
-        formData.append('password', formState.inputs.password.value);
-        formData.append('image', formState.inputs.image.value);
-        const responseData =  await sendRequest("http://localhost:5000/api/users/signup", "POST", formData
+        formData.append("email", formState.inputs.email.value);
+        formData.append("name", formState.inputs.name.value);
+        formData.append("password", formState.inputs.password.value);
+        formData.append("image", formState.inputs.image.value);
+        const responseData = await sendRequest(
+          "http://localhost:5000/api/users/signup",
+          "POST",
+          formData
         );
         auth.login(responseData.user.id);
-      } catch (err) {
-        
-      }
+      } catch (err) {}
     }
   };
 
@@ -116,7 +117,14 @@ const Auth = () => {
               onInput={inputHandler}
             />
           )}
-          {!isLoginMode && <ImageUpload center id="image" onInput={inputHandler}/>}
+          {!isLoginMode && (
+            <ImageUpload
+              center
+              id="image"
+              onInput={inputHandler}
+              errorText="Please upload an image."
+            />
+          )}
           <Input
             element="input"
             id="email"

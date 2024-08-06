@@ -40,7 +40,7 @@ const signup = async (req, res, next)=> {
     const createdUsers = new User({
         name,
         email,
-        image: "https://img.freepik.com/free-photo/floral-patterns-depict-modern-wedding-celebration-generated-by-ai_188544-9728.jpg",
+        image: req.file.path,
         password,
         places: []
     });

@@ -1,17 +1,7 @@
-const { v4: uuid } = require("uuid");
 const { validationResult } = require('express-validator')
 
 const HttpError = require('../models/http-error')
 const User = require('../models/user')
-
-const DUMMY_USERS = [
-    {
-        id: "u1", 
-        name: "Max Schwarz",
-        email: "test@test.com",
-        password: "testers"
-    }
-]
 
 const getUsers = async (req, res, next)=> {
     let users;
@@ -62,8 +52,6 @@ const signup = async (req, res, next)=> {
         const error = new HttpError('Signin Up failed, Please try again', 500);
         return next(error);
     }
-
-    DUMMY_USERS.push(createdUsers)
     res.status(201).json({user: createdUsers.toObject({getters: true})})
 }
 
@@ -84,7 +72,7 @@ const login = async (req, res, next)=> {
         return next(error);
     }
 
-    res.json({message: "Logged In"})
+    res.json({message: "Logged In", user: existingUser.toObject({getters: true})})
 }
 
 

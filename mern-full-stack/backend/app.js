@@ -13,7 +13,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use('/uploads/images', express.static(path.join('uploads', 'images')))
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -50,7 +50,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://gauravsaini050203:bBczYMuvruZTTnfv@cluster0.nndflme.mongodb.net/mern"
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.nndflme.mongodb.net/${process.env.DB_NAME}`
   )
   .then(() => {
     app.listen(5000);
